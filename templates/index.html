@@ -209,7 +209,7 @@
         -->
     </div>
     
-    <script>
+   <script>
         /*
             <script> Section: JavaScript
             
@@ -288,16 +288,18 @@
                         - resultElement.innerText: Updates the text inside the result <div> to display the result.
                     */
                     resultElement.innerText = 'Result: ' + data.result;
+                    await new Promise(resolve => setTimeout(resolve, 100)); // ✅ ensure DOM updates before test reads it
                 } else {
                     /*
                         Error Response Handling
                     
-                        - If the response is not successful, it is expected to contain an 'error' field with
-                          a descriptive message.
+                        - If the response is not successful, it is expected to contain an 'error' or 'detail' field
+                          with a descriptive message.
                           
                         - resultElement.innerText: Updates the text inside the result <div> to display the error message.
                     */
-                    resultElement.innerText = 'Error: ' + data.error;
+                    const message = data.error || data.detail || 'Unknown error';
+                    resultElement.innerText = 'Error: ' + message;
                 }
             } catch (error) {
                 /*
@@ -314,5 +316,3 @@
             }
         }
     </script>
-</body>
-</html>
