@@ -4,6 +4,11 @@
 This project demonstrates how to set up a FastAPI web application using **Docker Compose** with **PostgreSQL** and **pgAdmin**.  
 It also shows basic database operations including creating tables, inserting records, querying, updating, and deleting data.
 
+## 🐳 Docker Hub Image
+You can pull the Docker image directly from my Docker Hub repository:  
+👉 **[`arhamidrees63/module9`](https://hub.docker.com/r/arhamidrees63/module9)**
+
+
 ---
 
 ## 🧰 Project Setup
