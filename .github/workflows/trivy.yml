@@ -20,11 +20,16 @@ jobs:
       - name: Build Docker image
         run: docker build -t app:test .
 
-      - name: Install Trivy
+      - name: Install Trivy manually
         run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+          sudo apt-get update -y
+          sudo apt-get install wget -y
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.67.2_Linux-64bit.tar.gz
+          tar zxvf trivy_0.67.2_Linux-64bit.tar.gz
           sudo mv trivy /usr/local/bin/
 
-      - name: Run Trivy scan (ignore exit code)
+      - name: Run Trivy scan (force success)
         run: |
+          echo "Running Trivy vulnerability scan (will not fail build)..."
           trivy image --exit-code 0 --ignore-unfixed --severity CRITICAL,HIGH --format table app:test || true
+          echo "✅ Trivy scan completed (ignoring vulnerabilities)."
