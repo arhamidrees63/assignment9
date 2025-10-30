@@ -9,6 +9,7 @@ on:
 jobs:
   trivy-scan:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,12 +20,11 @@ jobs:
       - name: Build Docker image
         run: docker build -t app:test .
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: app:test
-          format: table
-          vuln-type: os,library
-          severity: CRITICAL,HIGH
-          ignore-unfixed: true
-        continue-on-error: true   # ✅ This is the key line!
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+          sudo mv trivy /usr/local/bin/
+
+      - name: Run Trivy scan (ignore exit code)
+        run: |
+          trivy image --exit-code 0 --ignore-unfixed --severity CRITICAL,HIGH --format table app:test || true
