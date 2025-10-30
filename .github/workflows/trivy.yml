@@ -24,7 +24,7 @@ jobs:
         with:
           image-ref: app:test
           exit-code: 0          # ✅ Prevents pipeline from failing
-          ignore-unfixed: true  # ✅ Ignore vulnerabilities with no available fix
+          ignore-unfixed: true  # ✅ Ignores unfixed vulnerabilities
           format: table
           vuln-type: os,library
           severity: CRITICAL,HIGH
